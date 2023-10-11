@@ -56,7 +56,11 @@ class StartupWindow(QMainWindow):
         self.setStatusBar(self.statusbar)
 
     def load_configuration_tables(self):
-        pass
+        if os.path.exists(self.config_path):
+            pass
+        else:
+            QMessageBox.critical(self, 'Fatal Error',
+                                 'Required Configuration file, configuration-tables.xlsx not found in /data')
 
     def validate_tables(self):
         pass
