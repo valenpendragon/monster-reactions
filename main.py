@@ -7,7 +7,7 @@ import os
 
 CONFIGURATION_FILEPATH = 'data/configuration-tables.xlsx'
 CHOICES_TABLES_FILEPATH = 'data/choices-tables.xlsx'
-REQUIRED_WORKSHEETS = ['Social Roles', 'Social Context',
+REQUIRED_WORKSHEETS = ['Social Roles', 'Social Contexts',
                        'Social Interaction Choices',
                        'Social Interaction Results']
 DIFFICULTY_VARIATIONS = ['A', 'B', 'C', 'D']
@@ -57,10 +57,25 @@ class StartupWindow(QMainWindow):
 
     def load_configuration_tables(self):
         if os.path.exists(self.config_path):
-            pass
+            # Load Excel sheets into pandas DataFrames.
+            xls = pd.ExcelFile(self.config_path)
+            required_worksheets = REQUIRED_WORKSHEETS
+            self.required_config_dfs = {}
+            for worksheet in required_worksheets:
+                try:
+                    self.required_config_dfs[worksheet] = pd.read_excel(xls, worksheet)
+                except ValueError:
+                    QMessageBox.critical(self, "Error",
+                                         f"Required {worksheet} not found in "
+                                         f"{self.config_path}")
+            print(f"self.required_config_dfs: {self.required_config_dfs}")
+            config_found_label = QLabel('Config loaded successfully.')
+            self.statusbar.addWidget(config_found_label)
+
         else:
             QMessageBox.critical(self, 'Fatal Error',
-                                 'Required Configuration file, configuration-tables.xlsx not found in /data')
+                                 'Required Configuration file, '
+                                 'configuration-tables.xlsx not found in /data')
 
     def validate_tables(self):
         pass
