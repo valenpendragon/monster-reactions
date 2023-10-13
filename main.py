@@ -2,6 +2,7 @@ import pandas as pd
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QPushButton, QFileDialog,
                                QMessageBox, QApplication, QMainWindow, QStatusBar,
                                QLabel, QHBoxLayout)
+from classes import ConfigurationWindow
 import sys
 import os
 
@@ -81,7 +82,8 @@ class StartupWindow(QMainWindow):
         pass
 
     def show_configuration_tables(self):
-        pass
+        self.config_window = ConfigurationWindow(self.required_config_dfs)
+        self.config_window.exec()
 
     def start_npc_interaction_window(self):
         pass

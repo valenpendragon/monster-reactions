@@ -12,4 +12,6 @@ REQUIRED_WORKSHEETS = ['Social Roles', 'Social Contexts',
 
 
 class ConfigurationWindow(QDialog):
-    pass
+    def __init__(self, required_config_dfs):
+        super().__init__()
+        pass
